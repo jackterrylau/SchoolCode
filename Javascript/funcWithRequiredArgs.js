@@ -1,6 +1,6 @@
 //Implement Javascript function with required parameters.
 
-// Approach 1. Check undefined value method.(簡查參數法)
+// Approach 1. Check undefined value method.(檢查參數法)
 function testMethod1(x,y) {
     if (x===undefined && y===undefined) {throw new Error("Parameter x and y is required")}
     if (x===undefined) {throw new Error("Parameter x is required")}
@@ -38,6 +38,12 @@ try {
     testMethod2()
 } catch (e) { 
     console.log("testMethod2() : " + e.message)
+}
+
+try {
+    testMethod2(undefined)
+} catch (e) { 
+    console.log("testMethod2(undefined) : " + e.message)
 }
 
 console.log("testMethod2(3) = " + testMethod2(3))
