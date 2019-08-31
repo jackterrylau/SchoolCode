@@ -3,6 +3,7 @@
 //定義一個會把所有參數相乘後回傳結果的函式
 function multiplication(...factors) {
     let result = 1
+    console.log("factors = " + factors, "; factors[0] = " + factors[0])
 
     factors.forEach(function (number) 
       {
