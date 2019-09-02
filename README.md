@@ -7,3 +7,4 @@ Javascript
  
 Cpp
  - DeckofCards.cpp : 用C++寫的自動發牌程式，輸入要發牌張數，然後洗牌最後得到發牌結果。
+ - IsAnagrams.cpp : 判斷兩字串是否為Anagrams(把兩字串全轉成小寫後為相同字串)。
