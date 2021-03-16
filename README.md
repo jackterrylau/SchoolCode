@@ -10,3 +10,6 @@ Javascript
 Cpp
  - DeckofCards.cpp : 用C++寫的自動發牌程式，輸入要發牌張數，然後洗牌最後得到發牌結果。
  - IsAnagrams.cpp : 判斷兩字串是否為Anagrams(把兩字串全轉成小寫後為相同字串)。
+
+Python
+ - miniMaxSum.py : 一個練習題目，給定一五個正整數的陣列，並且求出最大的4個數字相加後的值以及最小的4個數字相加後的值以下列字串格式: min max 。
