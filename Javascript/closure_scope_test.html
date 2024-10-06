@@ -1,0 +1,76 @@
+<!DOCTYPE html5>
+<html>
+    <head>
+        <title>閉包實驗-測試閉包範圍</title>
+        <style>
+            #box {
+                position: absolute;
+                border-color: red;
+                border-width: 5;
+                /*background-color: yellow;*/
+                width: 800px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+        <script>
+            let box = document.getElementById("box");
+            let result = "";
+            let outerValue = 'ninja';
+            let later;
+
+            function outerFunc() {
+                let innerValue = 'Warrior';
+
+                function innerFunc(parameter) {
+                    if (innerValue) result += "<p>Inner Closure contains innerValue: " + innerValue + "</p>";
+                    if (outerValue) result += "<p>Inner Closure contains outerValue: " + outerValue + "</p>";
+                    if (parameter) result += "<p>Inner Closure contains parameter: <font color='blue'>" + parameter + "</font></p>";
+                    if (declareVarBeforeInvokeOuterFunc) {
+                        result += "<p>Inner Closure contains declareVarBeforeInvokeOuterFunc: " + declareVarBeforeInvokeOuterFunc + "</p>"; 
+                    }
+                    result += "<p>Inner Closure access declareVarAfterInvokeOuterFunc: " + 
+                        "<font color='red'>" + declareVarAfterInvokeOuterFunc + "</font></p>"; 
+                    result += "----------------------------------------------------------------------------"
+                }
+                result += "<p>outerFunc accesses declareVarBeforeInvokeOuterFunc: " + declareVarBeforeInvokeOuterFunc + "</p>";
+                result += "<p>outerFunc accesses declareVarAfterInvokeOuterFunc: " +
+                    "<font color='red'>" + declareVarAfterInvokeOuterFunc + "</font></p>";
+                result += "END OuterFunc ----------------------------------------------------------------------------"
+
+                later = innerFunc;
+            }
+
+            /***
+             * 
+             * Before invoking outerFunc, The innerFunc is not existed.
+             * Below code will get an error message : innerFunc is not defined.
+             * 
+             * **/
+            try {
+                innerFunc("CallInnerBeforeOuter");
+            } 
+            catch (e) {
+                result += "<p>Call innerFunc() before invoking outerFunc(): " + e.message + "</p>";
+            }
+
+            var declareVarBeforeInvokeOuterFunc = "Panda 1";
+            result += "<p>Before invoking outerFunc, later = " + later + "</p>";
+            outerFunc();
+            // if call later here, declareVarAfterInvokeOuterFunc in innerFunc = undefined, 因為call later 前該變數還沒被宣告定義
+            later("Call_Later(innerFunc)_after_invoking_OuterFunc"); 
+            var declareVarAfterInvokeOuterFunc = "Panda 2";
+             // if call later here, declareVarAfterInvokeOuterFunc in innerFunc = panda 2 , 因為call later 前該變數已宣告定義
+            later("Call_Later(innerFunc)_after_declare_declareVarAfterInvokeOuterFunc"); 
+
+            result += "<p>內部函式形成的閉包存取範圍:<ul>"
+            result += "<li><b>外部函式以內所有變數</b></li>"
+            result += "<li><b>與外部函式同層級的所有變數且必須定義在內部函式閉包被呼叫建立之前</b></li>"
+            result += "<li><b>要使用內部函式閉包之前,外部函式必須被呼叫或建立</b></li></ul></p>"
+
+            box.innerHTML = result;
+
+        </script>
+    </body>
+</html>
