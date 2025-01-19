@@ -1,3 +1,4 @@
+#Py: copy module provides deepcopy to copy objects
 import copy
 
 #Py: 抽象類別必須指定 metaClass 來繼承 abc.ABCMeta class
