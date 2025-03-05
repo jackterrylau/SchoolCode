@@ -4,6 +4,7 @@ import copy
 #Py: 抽象類別必須指定 metaClass 來繼承 abc.ABCMeta class
 from abc import ABCMeta, abstractmethod
 
+
 class DsSingleLinkedListNode:
     """ A Single Linked List Node Implements.
     
@@ -43,6 +44,7 @@ class DsSingleLinkedListNode:
     def print_node(self):
         """ Print the data of the Single Linked List Node. """
         print(f"data = {self.data}")
+
 
 #Py: Define a Abstract Class
 class DsLinkedList(metaclass=ABCMeta):
@@ -420,7 +422,7 @@ class DsSingleLinkedList(DsLinkedList):
 
         print("::Deleted %d matched nodes."%(del_number))
         return del_number
-    
+
     def visit(self):
         """ Visit the Single Linked List. 
         
@@ -484,6 +486,7 @@ class DsLinkedListHelper:
             reverse_node.next = reverse_next_node
             #2. End
 
+            # Tips: First Round, Assign New Tail Node to the First Node of the Reversed List(reverse_node)
             if round == 1: list.Tail = reverse_node
             round += 1
         list.Head = reverse_node
@@ -492,6 +495,35 @@ class DsLinkedListHelper:
 
         return True
 
+    @staticmethod
+    def concateLinkedList(list1=DsLinkedList, list2=DsLinkedList):
+        """ Return a new Single Linked List concating 2 DsLinkedList.
+
+        Parameters
+        ----------
+        list1: DsSingleLinkedList
+            First List to do concatenate
+        list2: DsSingleLinkedList
+            Second List to be concatenated
+        
+        Returns
+        -------
+        clist: DsSingleLinkedList
+            return the final list concatenated list1 and list2
+        """
+        
+        if (not list2) or (not list2.Head): return copy.deepcopy(list1) if not list1 else None
+        if not list1.Head: return copy.deepcopy(list2)
+
+        clist = copy.deepcopy(list1)
+        append_list = copy.deepcopy(list2)
+
+        #3. Tips: Major Concate Single Linked List Process(第一個 List 的尾 串接到第二個 List 的頭, 然後 第二個 List 的尾為新的尾)
+        clist.Tail.next = append_list.Head
+        clist.Tail = append_list.Tail
+        #3. End
+
+        return clist
 
 if __name__ == "__main__":
 
@@ -500,9 +532,6 @@ if __name__ == "__main__":
     link_list1.appendNode(DsSingleLinkedListNode(200))
     link_list1.appendNode(DsSingleLinkedListNode(300))
     link_list1.appendNode(DsSingleLinkedListNode(400))
-    link_list1.appendNode(DsSingleLinkedListNode(500))
-    link_list1.appendNode(DsSingleLinkedListNode(600))
-    link_list1.appendNode(DsSingleLinkedListNode(700))
 
     #Py: We can use copy.deepcopy to copy an object deeply
     link_list2 = copy.deepcopy(link_list1)
@@ -513,6 +542,10 @@ if __name__ == "__main__":
     DsLinkedListHelper.reverseList(link_list1)
     print("List2 Copied Linked List1: ")
     link_list2.visit()
+    link_list3 = DsLinkedListHelper.concateLinkedList(link_list1, link_list2)
+    link_list2.appendNode(DsSingleLinkedListNode("abc"))
+    link_list2.visit()
+    link_list3.visit()
 
 
 
